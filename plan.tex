@@ -1,0 +1,763 @@
+\section{Work Plan and Method}
+\label{sec:work-plan}
+
+\paragraph{Role and Expertise of the Research Team} This collaboration plan is
+designed to enable the principal investigators, senior personnel, and students
+to effectively work together, communicate, and make decisions that will help
+fulfill the project goals. The team includes experts on large-scale network
+measurement, human-computer interaction, network security, and natural
+language processing. The PIs have extensive experience working
+together. Chetty, Feamster, and Tan have been collaborating on research
+related to identifying misleading online content since 2020, co-advising
+undergraduate, masters, and graduate students in this regard.
+
+
+\subsection{Part 1: Understanding the Landscape of Platform Moderation}
+\label{sec:landscape}
+
+We aim to provide the first systematic overview
+of the policies on content moderation across different platforms and compare
+them with the related legal requirements on copyright, misinformation, and hate speech if such requirements exist.
+This comparison will allow us to understand how content moderation policies
+developed by Internet platforms are influenced by legal requirements on
+content moderation specified by United States laws. It will also help us to
+understand how content moderation policies deviate from each other across
+platforms and for the different types of online content we study (copyright,
+misinformation, and hate speech).
+
+
+\begin{table}[t]
+    \begin{tabular}{|p{6in}|}
+\hline
+aliexpress.com, 
+amazon.com, 
+archive.org,
+bbc.co.uk, 
+booking.com,
+ebay.com, 
+etsy.com, 
+facebook.com, 
+fandom.com, 
+flickr.com,
+github.com, 
+imdb.com, 
+imgur.com, 
+indeed.com, 
+instagram.com,
+linkedin.com, 
+medium.com, 
+msn.com, 
+nytimes.com, 
+pinterest.com,
+pornhub.com, 
+quora.com, 
+reddit.com, 
+researchgate.net, 
+sciencedirect.com, 
+soundcloud.com,
+sourceforge.net, 
+spankbang.com, 
+stackoverflow.com, 
+theguardian.com, 
+tiktok.com,
+tumblr.com, 
+twitch.tv, 
+twitter.com, 
+vimeo.com, 
+w3.org,
+washingtonpost.com,
+wikipedia.org, 
+wordpress.com, 
+xhamster.com, 
+xnxx.com 
+xvideos.com, 
+youtube.com
+\\ \hline
+\end{tabular}
+\caption{The 43 platforms in our dataset of online content moderation policies (OCMP-43), ordered by their Tranco ranking.}
+\label{tab:platformlist}
+\end{table}
+
+In preliminary work we have collected content moderation policies from the 43
+largest online platforms hosting user-generated content, focusing on policies
+around copyright infringement, harmful speech, and misleading content.
+\paragraph{Platform selection.} We considered the top $200$ websites from the Tranco
+list~\cite{LePochat2019} obtained on June 29, 2022\footnote{The list can be accessed at
+\url{https://tranco-list.eu/list/Q9X24/full}}. Of these, we filtered out those
+websites that do not host user-generated content, such as \url{google.com},
+\url{akamaiedge.net}, and \url{baidu.com}, as well as those which 
+are not primarily in English.
+
+\paragraph{Web scraping.} 
+Modern web platforms, especially the
+most popular sites in our list, lack a consistent structure for distributing
+information regarding content moderation policies across a site's
+pages. 
+Although almost all the platforms do feature a \textit{Terms of Service (ToS)} page
+that outline key policies, including those regarding content moderation, many
+sites also have separate \textit{Community Guidelines/Standards}, \textit{Help Centers}, and/or
+official blog posts. Moreover, a particular platform's policies may be hosted on
+another domain entirely---often on parent platforms or customer service
+platforms. For instance, many of \url{facebook.com}'s policy pages can be found
+on \url{meta.com}, and \url{reddit.com}'s policies are on both
+\url{redditinc.com} and \url{reddithelp.com}. We first manually explored the
+43 websites of focus and recorded URLs for each site's key policy pages. In most
+cases, we found the URLs corresponding to the \textit{ToS}, as well as the \textit{Community
+Guidelines/Standards} and \textit{Help Center} if they existed---we refer to these as
+\emph{canonical links}.
+
+Informed by the manual exploration, we use a keyword list to identify seed links for each platform by searching these keywords paired with platform names on generic search engines such as \url{google.com}, as well as on the
+platforms themselves, if they had a \emph{Help Center} or other searchable database
+of links.
+We use the set of seed links as the
+starting point to explore all web pages on a given platform that may contain topic-related content moderation policies for
+that platform. We designed and implemented a custom web scraper, as we found existing open-source
+solutions such as Scrapy~\cite{scrapy} and MAXQDA's~\cite{maxqda} built-in
+scraper often failed to retrieve text from pages of interest due to bot
+blocking, dynamic loading of webpages using JavaScript, as well as direct rate
+limiting for queries from a particular Internet Protocol (IP) address.
+
+We ran our scraper from May to July 2023, resulting in text from 8,514
+policy pages from all 43 platforms. In some cases, 
+the scraper was unable to download
+the page source from relevant pages. We manually copied the text from these
+115 pages, forming 1.4\% of the total number of pages we scraped. 
+We parsed the raw text into sentences and included the 5 sentences before and after the sentence containing the keyword, merging overlapping passages as needed. 
+Each passage is then labeled along two axes: which platform the text
+came from, and which topic of content moderation the text referred
+to---Copyright Infringement, Harmful Speech, or Misleading
+Content.
+We refer to this dataset as {\em OCMP-43}.
+
+\paragraph{Annotating content moderation policies (work in progress).} 
+To provide further structure to the large volume of text from the
+content moderation policies, we are working on an
+annotation scheme (or ``codebook'') to label relevant sections of text.
+Such an approach is commonly used in the social sciences to both categorize
+and extract meaning from language-based data~\cite{saldana2021coding}. 
+We combine both deductive and inductive approaches to codebook
+development. Using the deductive approach, we develop an initial list of
+codes that could help answer our hypotheses with regard to the composition of
+content moderation policies, and their link to existing legal regimes. We
+focus on codes that could capture the \emph{purpose} of a portion of policy
+text, especially as it pertained to how a user would interact with it. We are
+guided by the principles outlined in Kiesler et al.~\cite{kiesler2012regulating} for healthy online communities, with
+emphasis on ``moderation criteria, a chance to argue one's case, and appeal
+procedures'' as key components of a comprehensive content moderation policy.
+We consider seven preliminary groups of codes: 1) policy justification (e.g., whether extant legal frameworks are references as motivation for policy);
+2) moderation criteria (e.g., whether platforms include examples and exceptions);
+3) safeguards (e.g., how platforms detect potential candidates to moderate);
+4) platform response (e.g., how platforms reviews and enforces content moderation policies);
+5) redress/appeal (e.g., venues in which users can appeal to moderation decisions);
+6) binding legalese (e.g., how platforms address liability and user rights);
+7) signpost (e.g., how platforms link to third-party resources).
+
+
+\begin{task}[Understanding content moderation policies]
+Qualitative and quantitative analyses of content moderation policies.
+\end{task}
+
+We have thus far focused on the question of ``Why do platforms say they moderate?'', we will spend the first year further analyzing the following questions with our annotated data: ``How do platforms describe what they moderate?'', ``How do platforms find content that may need moderation?'', ``What happens to flagged content?'', ``What recourse do users have after being moderated?'', and ``How comprehensive are policies across platforms?''
+For example, these analyses will help us understand the full approaches platforms take---from engendering policies and finding violative content to responsive enforcement and fielding appeals---and the extent to which their approaches differ across types of platforms and/or types of content.
+This step will require close reading of many policies and iteratively improving our coding scheme.
+These results will in turn inform the other thrusts of this proposal.
+
+Since annotation can be laborious, we will use large language models for the
+initial exercise such as in-context learning with commercial APIs (e.g.,
+GPT-4) and fine-tuning open models (e.g., FLAN-T5), and potentially leverage
+recent work from Co-PI Tan on few-shot learning from natural language
+explanations~\cite{zhou2023flame}.  Note that our dataset is relatively small
+and the resultant classifiers can produce noisy labels.  We will thus develop
+a machine-in-the-loop approach where algorithms identify candidate
+descriptions and candidate labels, and then humans (e.g., our research team)
+provide feedback on these results.  Building on Co-PI Tan’s work on the
+genealogy between communities~\cite{tan:18}, we will then quantitatively
+measure the differences between policies on different platforms for the same
+type of content over time.  We hypothesize that there exists wide variability
+in how platforms describe their content moderation strategies.  Furthermore,
+these differences will depend on the vagueness of the related legal
+requirements: the more vague the legal requirements, the greater the variance.
+Last but not least, content moderation policies are in constant flux.  We can
+also understand the temporal differences of content moderation policies (in
+the same platform) building on Task 3.2.
+
+
+
+\begin{task}[Building longitudinal datasets]
+Building an evolving dataset of content moderation policies.
+\end{task}
+Our initial effort collected a snapshot of the policies and took three months due to the challenges in scraping.
+Building on this work, we plan to conduct a longitudinal study across
+platforms by running our scraper at regular intervals and
+annotating the text that has changed from the previous run. 
+However, the challenges of web scraping will continue to evolve. So, to successfully collect such data over time, we will also need continued maintenance of our scraper to adapt to the new challenges such as increasingly sophisticated bot management techniques.
+We plan to open source our scraper to facilitate further research.
+
+An evolving database of content moderation policies could provide
+an insightful study of the impact of political and cultural shifts on platform
+policies. For instance, there has been a large shift in the content moderation policies of \url{X.com}, formerly known as \url{Twitter} at the time we collected our data. 
+Finally, by adjusting the target platforms and topic-wise keyword list, researchers can use the scraper to 
+find policy around other topics of interest, such as platform policies on Artificial Intelligence (AI) generated content, or even collect data for training machine learning models.
+
+\paragraph{Expected outcomes and potential risks.}
+Given our preliminary work, the main risk lies in how much manual effort will be required in the proposed work.
+Because of how painstaking this exercise is, we hope that releasing our code and data will help other researchers study this important topic.
+Results in this part will
+provide the basis for future observational measurement studies of how content moderation rules are implemented and serve as a dataset of rules from which to draw examples to test in user studies around how users perceive these rules and their effectiveness in Section \ref{sec:user} and \ref{sec:auditing}.
+
+
+\subsection{Investigating How Users Understand Current Content Moderation Rules }
+\label{sec:user}
+
+The second part of this project investigates how to make the content
+moderation process easier to understand and more transparent to users. To this
+end, this part of the project will study
+how users perceive and understand current content moderation rules, as well as
+their expectations for how these rules apply. Robinson et al. and Pew Internet
+Research Center provide evidence that users do not read Terms of Service (ToS) or
+privacy policy documents on online providers and demonstrate that even if you
+simplify ToS, this may not by itself increase user understanding of these
+documents~\cite{Robinson_Beyond_Agree_2020, PewPrivacyPolicyToS2019}. However,
+these researchers also show that repeated exposure to simple ToS rules may
+increase understanding of these rules. Similarly, if it is clear what
+the content moderation rules are on a platform and how these rules apply,
+arguably users will have more trust in a platform's content moderation,
+regardless of whether these rules are legally mandated. If, on the other
+hand, rules are unclear, hard to find, and ambiguous as to how they apply,
+users may feel that moderation decisions are inconsistent and unfair. This
+will lead to decreased trust in the platform. Part 2 of the proposal will
+allow us to improve the fairness and transparency of content moderation
+processes by providing insights into what users know and understand about
+current rules whose formats and locations differ across various online
+platforms. 
+
+\paragraph{Research questions.}
+Our specific research questions are:
+\begin{enumerate}
+    \item Do users understand the meaning and applicability of the current content moderation rules?
+    \item Do users understand how the content moderation rules, as currently worded and enforced, apply to different types of content? 
+\end{enumerate}
+ 
+We will use the outcomes of Part~\ref{sec:landscape} to inform the design of our user studies on
+content moderation rules by drawing rule excepts from our datasets (see Figure \ref{fig:example_rules_OMCP43}).
+We hypothesize that
+users may understand copyright violations better than hate
+speech and misinformation because laws for copyright are more
+clear and our preliminary examination of OCMP-43 suggests that these rules are more well articulated as a result. To answer these questions, we will conduct qualitative user studies using interviews and surveys. The results of these studies will inform content moderation
+policy design, what needs to be communicated to a user, and how to ensure
+users have a recourse for re-engagement or appeals when they are moderated. 
+
+\paragraph{Previous work.} PI Chetty will leverage expertise on conducting qualitative studies, large scale surveys, and experiments with users for this part of the proposal \cite{wyche2013want, romanosky2018understanding, reichel2020have,chetty2007smart, chetty2008getting, kientz2007grow, poole2008more, poole2009computer, kumar2017notellingpasscodes, mathur_endorsements_2018, swart_is_2020, mathur2015mixed,mathur2016they, mathur2018characterizing, chang2017spiders, mathur2019dark}. Additionally, PI Chetty will build on her knowledge of how to develop prototypes for the creation of example content to test in the user studies \cite{chetty2010s, chetty2011my, chetty2012you, mathur2016they, kumar2018codesign, swart2020ad}.
+
+
+\begin{task}[User understanding]
+Evaluating user comprehension of rules.
+\end{task}
+Our first goal is to show users different platform rules for
+misinformation, hate speech, and copyright and ask them about how clear these rules are to them in terms of what they mean and how they apply. This goal will help determine how clear different content
+moderation rules are to platform users, how they expect the rules to apply, and whether particular types of rules or formats are more understandable to users. To better understand how users
+comprehend existing content regulation rules, we will administer an online
+survey with 1,000 online users of various online platforms, drawing on the most popular sites from our OCMP-43 dataset. Sample sizes are estimated based on PI
+Chetty's prior work~\cite{mathur_endorsements_2018}. First, to gage users' experiences with different platforms, we will ask about which platforms participants most frequently use. Next, we will ask users questions to gage their awareness of online content moderation practices over different types of content. For instance, we may ask users which types of content they believe there are rules for and why and whether there are any platforms where some rules apply more than others. In addition, we will ask if users have had prior experiences with content moderation posting on various platforms personally or as observers. After the background information has been gathered, we will show users a rule that pertains to copyright, misinformation, or hate speech from a representative sample of OCMP-43 platforms covering a diversity of categories (e.g., news, shopping, social media, art, or streaming sites). We will curate the rule excerpts we show based on the rules
+analysis in Section~\ref{sec:landscape} and each user will see rules from each topic area. 
+
+For each rule shown, we will take the most salient excerpt of the rule and present this excerpt to the users. For instance, 
+% in our OMCP-43 dataset, 
+the eBay member-to-member contact policy on harmful speech has the following excerpt: \textit{``We don't tolerate threats of physical harm using any method including by email or on our public message boards (such as our discussion boards, groups, and other community areas).'}. After showing this eBay excerpt on harmful speech, we will
+ask the user to first explain in their own words what they believe the rule
+means with respecting to posting content on the platform. For each rule excerpt, we will ask users to rate the rule for clarity, as well as whether they believe they know when this rule applies and why. For instance, users may not know where to draw the line with AI generated content and copyright so this would be a good example to test in the survey. Next, we will ask users to rate how fair they believe the rule is
+as well as how actionable they believe the rule is. We will also ask users what recourse users have if their content is removed based on this rule, whether this rule has a legal basis, and why. To ascertain who they believe implements the rules, we will ask users if they
+believe the rules are enacted by humans or machines and finally, ask users if
+they have any proposed edits to the rule in question and why. Each user will
+be shown rules for the different classes of content violations
+(misinformation, copyright, and hate speech). We may also conduct a comparative study where we show the same rule from two different platforms and see which is more clear. As a follow-up, we will conduct interviews with a subset of survey respondents (based on prior work, N=30) to gather more detailed data. We will analyze whether some
+classes of rules are more understandable than others and whether some rules
+are more easily comprehensible by different platform users (e.g., is an eBay
+user more likely to understand a hate speech rule than a Reddit user?).
+
+
+\textit{Analysis:} We will analyze the data using statistical techniques and qualitative data coding for open-ended questions \cite{lazar2017research}. %https://ir.lawnet.fordham.edu/cgi/viewcontent.cgi?article=1618&context=faculty_scholarship). 
+Specifically, we will calculate how much users agree about different rules across all users for each topic (misinformation, copyright, and hate speech) and we may calculate if there are statistical differences across users of different platforms for the same kind of online content moderation rules such as misinformation. Interview data will be qualitatively analyzed using thematic coding and multiple coders on transcribed interview data. We will use codes informed by Part 1's rules analysis. The outcomes of this study will include evidence of which classes or rules are easier for users to understand and why and whether comprehension differs depending on the rule topic or presentation and depending on the types of platforms users frequently use. These outcomes will also inform our studies in Part 3.
+
+
+\if 0
+\begin{figure}[t]
+        \centering
+        \begin{subfigure}{0.4\textwidth}
+            \includegraphics[width=\textwidth]{figures/fbsmallmisinfovaccine.jpg}
+            \caption{Facebook Misinformation Rule Excerpt.}
+            \label{fig:FBmisinforule}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.4\textwidth}
+            \includegraphics[width=\textwidth]{figures/twitch_rule2.jpg}
+            \caption{Twitch Copyright Rule Excerpt.}
+            \label{fig:Twitchcopyrightrule}
+        \end{subfigure}
+        
+        \caption{Example rules from Facebook and Twitch on misinformation and copyright respectively drawn from OCMP-43.}
+        \label{fig:example_rules_OMCP43}
+        \end{figure}
+\fi
+
+
+
+\begin{task}[Evaluating rule implementation]
+Determine whether users can apply rules to example content.
+\end{task}
+
+
+\if 0
+\label{sec:rule-implementation}
+\begin{table}[t]
+    \begin{tabularx}{\textwidth}{c | X | X | X}
+        & {\bf Copyright} & {\bf Hate Speech} & {\bf Misinformation} \\ \hline
+        \parbox{0.7in}{Commercial\\ Products} &
+        \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/obvious/etsycopyrightobvious}} &
+        \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/kkk.jpg}} &
+        \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/obvious/etsymisinformationobvious}}
+        \\ \hline
+        % Video & 
+        % \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/obvious/facebook_post_copyright}} & 
+        % \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/ambiguous/asiansdirtymugglesvideo}} &
+        % \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/obvious/youtubemisinformationobvious}} 
+        % \\ \hline
+    Text & 
+        \parbox[c]{\hsize}{\includegraphics[width=0.24\textwidth]{figures/obvious/reddit_copyrightBig.jpg}}  & 
+        \parbox[c]{\hsize}{\includegraphics[width=0.24\textwidth]{figures/ebay.jpg}} & 
+      \parbox[c]{\hsize}{\includegraphics[width=0.24\textwidth]{figures/facebook_post_misinfo.png}} 
+        \\ \hline
+    \end{tabularx}
+    \caption{Examples of content we generated that could violate the content moderation
+    rules we observed in OMCP-43, by content type (commercial products, 
+    % video,
+    text) and by type of violation (copyright, hate speech, misinformation).
+    We only show examples for five platforms all of which appear in our preliminary OCMP-43 dataset: Etsy, eBay, Facebook, YouTube, and Reddit.}
+    \label{tab:example_content}
+\end{table}
+\fi
+
+To build trust in online platforms, it is important to have rules with clear applicability to posted content. This task will allow us to determine how users expect rules to apply and whether those expectations align with what actually happens on a
+platform based on observations in Part 3. We will design an
+online survey to evaluate user perceptions of content
+moderation rules for copyright, hate speech, and misinformation respectively.
+For each set of rules, we will draw at least one rule from the group of rules
+pertaining to that topic (e.g., misinformation) and first ask the user to read
+the rule, (e.g., see Figure \ref{fig:example_rules_OMCP43} for example rules on misinformation and copyright on Facebook and Twitch), and rate the rule for clarity and fairness. We may also show similar rules drawn from similar types of platforms (e.g., Vimeo versus YouTube versus Twitch versus TikTok).
+
+Second, we will show a user an excerpt of ``content'' and ask them
+whether or not this content violates the rule in question and to explain why
+or why not the rules applies. Users will also be asked if the content will definitely get moderated, may get moderated, or definitely would not get moderated. Where possible, we will fabricate this content using examples that are quoted in platform rules we have gathered in our preliminary dataset as shown in Table \ref{tab:example_content}. We will vary content to show a spectrum of clearly questionable content to content that is not violating the rule. For instance, a clear copyright violation is show in Table \ref{tab:example_content}, with Mickey Mouse's image on a bag. The table also shows an example of \textit{harmful} speech we drew directly from eBay's member-to-member contact policy and an example of misinformation content drawn from the Facebook help center rules on vaccine misinformation (Figure \ref{fig:FBmisinforule}). If we cannot find an appropriate example of content that needs to be moderated directly from OCMP-43 or our extensions in Part 1, we will fabricate this content based on rules in the dataset, taking care to ensure it is not harmful. For instance, based on the copyright rule excerpt from Twitch (Figure \ref{fig:Twitchcopyrightrule}), we could create a video of a live Twitch stream which uses a Taylor swift song as background music as an example of content violating the rule. We will also vary the types of content shown, for
+instance, using a video with misinformation, a Reddit or Facebook post with
+harmful speech (as opposed to hate speech), or a product on Etsy with a copyright violation.
+
+Third, we will ask survey takers how the ``content'' was actually regulated (based on real
+observations from observational studies in Part 3) and ask them what they think about the
+decision. This will allow us to ascertain how users expectations match with
+what actually happens on platforms. We will end the survey by asking
+users' demographic information and information about what platforms they
+typically use and how frequently. Each user will see
+rules from all three content moderation rule topics (hate speech, misinformation, copyright) to make a within subjects
+comparison of how users respond to different kinds of rules. Rules presented
+to the user will be randomized to prevent ordering effects. We will use insights from Part 1 and Part 3 to focus
+recruitment and design additional questions as required. 
+
+We will survey sufficient English-speaking users (at least 1,000 users, based
+on estimates from prior work~\cite{mathur_endorsements_2018}) in the
+United States to compare and contrast how easily users can apply rules
+for copyright, misinformation, and hate speech. We will compensate users based on the
+survey response time. We will use Prolific to
+administer the survey to a survey users, ensuring that we draw
+from users of the different target platforms in our OCMP-43 data set. We will also run a more focused interview study to answer the same questions as the survey with online content creators since they are often most affected by content moderation rules. 
+
+\paragraph{Ethical safeguards:} An important \textit{ethical consideration} is
+that no content that is detrimental to users' overall well-being will be shown
+because we will curate a set of examples to contain only benign examples of
+harmful speech, copyright violations, and misinformation on
+non-controversial non-hot button topics.  Specifically, we will take care to
+avoid using examples or content that is hateful or has direct slurs against a
+population group. Even with these precautions, we will inform users clearly of
+the types of content they will encounter during the survey at consent time, to
+allow them to opt out if they do not wish to participate in the study. We will
+also include a trigger warnings on the survey if necessary in the task listing
+on Prolific but we will take care not to show examples of content ahead of the
+survey. Following the survey (and interviews as applicable), users will also
+be debriefed on any potentially misleading content they were exposed to
+mitigate post-study effects.
+
+
+\textit{Analysis:} We will use thematic analysis and ensure that each
+transcript is coded by at least two researchers to ensure that we have
+consensus with respect to the themes emerging from the data.  We will perform
+statistical analysis on the data to determine how well users understand and
+respond to different kinds of rules and look at agreement across users for
+different classes of rules~\cite{lazar2017research}. We will also use
+qualitative data analysis to code any open-ended answers in the
+survey~\cite{saldana_coding_2013}. 
+
+
+\paragraph{Expected outcomes and potential risks.} We will provide
+(1)~evidence of how users
+understand current content moderation rules for hate speech, misinformation,
+and copyright; (2)~evidence of users' expectations of how content moderation
+rules apply and evidence of how that matches up with how rules are actually
+applied on platforms; and (3)~policy recommendations for amending content
+moderation policies to ensure users can comprehend the content regulation
+rules for more trustworthy and transparent online endeavors. The challenges of
+this part of the project are to generate meaningful content based on the
+analysis of the rules and to recruit participants who use different online platforms.
+If needed, we will administer the surveys to and conduct interviews with users of a subset of online
+platforms to gather a more targeted sample. Moreover, if some rules are more clear
+than others for a category of online content, and less likely to expose users to potentially harmful content,
+we may focus on one rule type.  
+
+\subsection{Studying Moderation in Practice}
+\label{sec:auditing}
+
+To understand the content moderation processes of these platforms, we will
+perform both observational studies and active audit studies. Our efforts in
+this area builds on our own previous work on performing software-supported
+audit studies of moderation of political
+advertising~\cite{hounsel2021software}, as well as previous work on auditing
+the content moderation policies of platforms, particularly in the area of
+algorithmic enforcement of copyright rules~\cite{perel2017black,
+gray2020playing}.  
+
+\paragraph{Measurement approach.} We propose to explore the consistency and
+transparency of the processes of these platforms using two different
+approaches: (1)~Internet-scale measurement; (2)~audit studies.  We describe
+these experiments in more detail in the rest of this section.  Our approach in
+this project builds on our past work on software-supported audit studies but
+takes a more ambitious approach, exploring a broader range of content over a
+wider range of platforms augmented by Internet-scale observational studies of the
+practices~\cite{hounsel2021software}.  
+
+
+\paragraph{Research questions.} We plan to study the following questions about
+content moderation: 
+\begin{enumerate}
+    \item {\bf Consistency.} How consistent are the decisions about moderation?  
+    \item {\bf Transparency.} Does the platform provide an explanation concerning moderation, to
+        the original poster, to other users, or both? Are these explanations
+        consistent?  
+    \item {\bf Consistency with user expectations.} Is the content moderation
+        practice of the platform consistent with user expectations?
+\end{enumerate} 
+
+\paragraph{Method and Scope.} 
+For each platform, we will monitor new content that is posted 
+(either directly by us or by other users of the platform) based a collection
+of search terms that include both a fixed set of keywords, as well as
+additional keywords based on trending topics and new content. For the case of
+copyrighted content, we will rely on a corpus of copyrighted content,
+including the titles of artistic works, as well as from other posted
+content (e.g., news articles) to identify content that may be copied. 
+For misinformation, we will apply named entity extraction to current news stories,
+analyze text from the social media sites and accounts of political figures, news agencies,
+and government accounts, as well as filter existing corpora of misleading content on various topics~\cite{pathak2019breaking,shahi2021exploratory} to identify keywords for search. To identify posts
+involving hate speech, we will rely on keyword search based on extensive existing lists
+of keywords \cite{vidgen2020directions}.
+
+\begin{task}[Internet-scale measurement]
+    Perform continuous, Internet-scale measurements of content across time in
+    the realms of copyright, hate speech, and misinformation.
+\end{task}
+\noindent
+Internet-scale observations of content moderation practices can be performed
+continuously, at scale, although they are sometimes more challenging because
+moderation events need to be explicitly observed; depending on the nature and
+speed of moderation, this type of observation is challenging.  
+Yet, past and ongoing work on large-scale Internet measurement of content platforms
+suggests that this approach is feasible. In particular, Kumar {\em et al.}
+have performed longitudinal analysis of content on Reddit using large-scale
+Internet measurement techniques~\cite{kumar2022understanding}. We will take a similar approach, building on
+our past work on large-scale Internet web scraping and analysis of content on
+a variety of platforms. Specifically, the PIs have recently performed
+large-scale content analysis of privacy policies, online content moderation
+policies, and opt-out procedures from the California Consumer Privacy
+Act~(CCPA), building customized large-scale web measurement tools to
+facilitate longitudinal analysis in each case. Although a complete canvassing
+of all content platforms is not feasible, we intend to focus our attention on
+platforms where the outcomes of content moderation policies may be ambiguous,
+based on the results from our user studies.
+In this work, we propose to perform continuous, Internet-scale measurements of
+content across the platforms we will study in this proposal, to determine
+instances of content that is visible, yet flagged, or removed with a
+placeholder notice for particular reasons.  
+We explore the following questions:
+
+\paragraph{Consistency of decision-making.} Where the effects of content
+moderation are visible, we will aim to characterize whether ``similar''
+content experiences similar outcomes, as far as moderation is concerned. While
+performing this type of experiment is more difficult in an observational
+study, we can measure the similarity of certain types of content using
+distance metrics either on the content itself or in appropriate embedding spaces, 
+and subsequently characterize whether content that has a
+similar disposition experiences similar outcomes (e.g., flagging, moderation,
+deletion). We can also potentially compare over time.
+
+\paragraph{Presence of explanations.} Although it is difficult in an
+observational study to determine whether the original creator or content
+poster receives an explanation of subsequent moderation, in the cases where
+explanations are visible to the public (e.g., flagged content), we can
+observe whether similar content is flagged in similar ways, both within a
+platform, across geography, user, and time; as well as across platforms for
+similar types of content.
+
+\begin{task}[Audit studies]
+    Conduct audit studies to explore how platforms perform
+    content moderation for different types of content.
+\end{task}
+\noindent
+To study how platforms implement policies with respect to specific content, as
+well as the consistency of policy application across time, user, and
+geography, we propose to design and conduct several targeted audit studies
+exploring how platforms perform content moderation.
+
+In audit studies, researchers introduce a hypothesis about
+decision-making error based on characteristics of the tester and the choice
+presented to the decision-making system. A controlled test involves creation
+or recruitment of subjects that are similar, to the extent possible, in all
+characteristics except for the characteristic under test. Testers are then
+randomly assigned to prompt the decision making system to make a choice.
+Statistical tests can then reveal differences in decision rates for different
+categories of testers and prompts. In the case of this study, the subjects
+under test are the platforms themselves (and, specifically, the processes
+involved in auditing the content). Since we are testing for consistency of
+rule enforcement, and consistency of communication about rules, the audit
+studies in this context will involve creation of a particular piece of
+content, followed by repeated attempts to post that content under different
+circumstances---time, geography, user account, and so forth.
+
+\paragraph{Previous work.} In our previous work, we looked for systematic
+errors in Google and Facebook's political advertising policy
+systems~\cite{hounsel2021software}.  In this work, we created software to
+support an audit of decision-making systems for political advertising policies
+pertaining to the United States. The software we developed queried publicly-available APIs
+to help generate ads that testers published to targeted
+geographically-targeted audiences on each platform. Our software also
+simulated a power analysis to determine how many ads needed to be placed for
+each tester. To test erroneous removal of non-election product ads, for
+example, we chose
+products with names that included the surnames of political candidates, based
+on reports that Facebook required authorization by the makers of ``Bush's
+Beans", an American food company that shares its name with former United
+States presidents \cite{rosenberg_facebook_2018}.
+Once we designed types of ads to place and determined how many ads should be
+placed, we wrote software to help generate ads for Facebook and Google, as
+shown in Figure~\ref{fig:facebook_ad_examples} and Figure~\ref{fig:google_ad_examples}.
+
+
+\if 0
+\begin{figure*}[h!]
+  \centering
+  \begin{subfigure}[b]{0.2\textwidth}
+    \includegraphics[width=\textwidth]{figures/fb_nature_crop.png}
+    \caption{Left-leaning parks/parades ad}
+    \label{fig:facebook_ad_1}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.2\textwidth}
+    \includegraphics[width=\textwidth]{figures/fb_veterans.png}
+    \caption{Right-leaning parks/parades ad}
+    \label{fig:facebook_ad_2}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.2\textwidth}
+    \includegraphics[width=\textwidth]{figures/fb_governor_d.png}
+    \caption{Left-leaning product ad}
+    \label{fig:facebook_ad_3}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.2\textwidth}
+    \includegraphics[width=\textwidth]{figures/fb_governor_r.png}
+    \caption{Right-leaning product ad}
+    \label{fig:facebook_ad_4}
+  \end{subfigure}
+    \caption{Examples of Facebook ads that we generated in a previous audit study.}
+  \label{fig:facebook_ad_examples}
+\end{figure*}
+
+\begin{figure*}[h!]
+  \centering
+  \begin{subfigure}[b]{0.3\textwidth}
+    \includegraphics[width=\textwidth]{figures/google_governor_d.png}
+    \caption{Left-leaning product ad}
+    \label{fig:google_ad_1}
+  \end{subfigure}
+  %
+  \begin{subfigure}[b]{0.3\textwidth}
+    \includegraphics[width=\textwidth]{figures/google_governor_r.png}
+    \caption{Right-leaning product ad}
+    \label{fig:google_ad_2}
+  \end{subfigure}
+    \caption{Examples of Google ads that we generated in a previous audit study.}
+  \label{fig:google_ad_examples}
+\end{figure*}
+\fi
+
+This past work not only introduced new techniques for scaling audit studies,
+but also found that Facebook, in particular, made many erroneous decisions
+concerning the moderation of advertisements when deciding to display these
+advertisements to users. For example, we discovered that
+Facebook mistakenly prohibited 17.5\% of advertisements for government
+websites, and 4.9\% of advertisements for civic events. Overall, the false
+positive rate for moderation of advertisements (i.e., incidents where Facebook
+mistakenly moderated or deleted a post) was more than 4\% of all ads that we
+placed~\cite{hounsel2021software}.  Many of the same aspects of
+experimental design, from content creation to statistical methods, apply to
+our proposed work.
+
+\paragraph{Proposed work.} We will perform software-supported audit studies
+across the proposed platforms to explore the content moderation policies for
+the three different types of content we propose to study (i.e., copyright,
+misinformation, and hate speech).  These studies will require the automatic
+generation of content, as we performed in previous studies. We will generate
+and curate content in two ways: (1)~using information gathered from a
+large-scale measurement study of moderated content; and (2)~synthetic, manual
+generation of content leveraging existing corpora as well as intuitions about
+what content should be moderated, based on analysis of policies (Section
+\ref{sec:landscape}). 
+
+For this project, we will target the design of our audit studies to complement
+the studies in Section~\ref{sec:user}, where we aim to explore user awareness
+and comprehension of content moderation rules on various platforms, as well as
+specific rule implementation. Specifically,
+Section~\ref{sec:rule-implementation} describes a survey-based study, where we
+will present users with content and ask them how they think various content
+will be moderated on different platforms. {\bf We will use the content that we
+generate as part of that study to launch targeted audit studies to determine
+how the platforms actually moderate this content---and, as mentioned, whether
+the moderation decisions are consistent over time.} Doing so will provide us
+with a unique opportunity to gauge not only the consistency of the
+decision-making process for different platforms, but also whether the actual
+actions and decisions are consistent with user expectations and understanding.
+
+Although it is sometimes suggested that the platforms themselves take part in
+this aspect of the research, it should be noted that the participation of a
+platform that it is itself under test introduces a potential conflict of
+interest and also risks tainting the study (i.e., if a platform knows it is
+being audited for certain types of content, it could alter its internal
+processes and thus affect the outcomes of the study). Nevertheless, we will
+consider approaching several of these platforms to see if they are interested
+in an external evaluation of their content moderations. It is possible that
+some platforms may be interested in the results of such a study, which may
+help improve their processes. If a platform declines participation in such a
+process, that itself provides useful information that can guide our
+understanding of how platforms view their own content moderation processes.
+
+\paragraph{Consistency of decision-making.} We will perform several
+experiments to gauge the consistency of moderation decisions. First, for the
+categories of content shown in Table~\ref{tab:example_content}, we will assess
+consistency of decision-making {\em over time}, for different timescales. To
+test the consistency of human decision-making processes, we will measure
+consistency on shorter timescales by posting the same content from different
+user accounts on the same day, as well as on multiple days throughout the same
+week. To track longer-term evolution (and potential inconsistencies that may
+arise as a result of evolving laws and policies), we will also post the same
+content at independent times across multiple months. Due to practical
+limitations (both the length of this project, as well as evolving programmatic
+APIs on platforms), we do not anticipate performing these measurements over
+the course of years. In addition to posting the same content on the same
+platform over time to gauge the consistency of rule application, we also plan
+to post the same content across platforms within the same timeframe, in cases where
+the analysis of policies from Section~\ref{sec:landscape} has suggested that
+similar content should be subject to the same moderation outcomes.
+
+\paragraph{Presence of explanation.} For each of the above audit experiments,
+we also aim to observe whether, if a moderation decision was made, whether an
+explanation was offered, to whom the explanation was offered (i.e., only to
+the poster of the content, to the general public, or both), and the specificity
+of the explanation. 
+
+\paragraph{Consistency with user expectation.} As mentioned, we will design
+these software-supported audit studies to use content that is generated as
+part of the survey-based studies described in
+Section~\ref{sec:rule-implementation}. In doing so, we will be able to
+directly compare outcomes of moderation processes---and the explanations users
+receive about outcomes, if any---to user expectations. First, we can determine
+whether a user's expectation about moderation outcomes is consistent with
+their survey responses. Second, if the outcome from the audit study diverges
+from a user's expectation of outcomes, we will perform a {\em post hoc} survey
+with the user showing them the true outcome and whether they would have a
+revised expectation based on the true outcome. Finally, if the content is in
+fact moderated {\em and} the user is provided with an explanation of this
+moderation decision, we will follow up to determine whether that explanation is consistent
+with the user's understanding and expectations.
+
+\paragraph{Expected outcomes and potential risks.} This section will produce
+two content-oriented datasets, created for the purposes of the auditing
+experiments and the observational studies, respectively. The auditing dataset
+will contain a combination of both real and synthetic content akin to
+Table~\ref{tab:example_content} that we used in our auditing experiments, to allow
+others to repeat the experiments. The observational dataset will contain data
+that we measure in practice from the platforms we choose to focus on, based on the
+keyword and named entities that we use to focus our searches. We will also
+publish the results of our observational and auditing studies and, where
+auditing specific rules proves difficult to do (e.g., due to rule ambiguity),
+we will also produce policy recommendations indicating the difficulty of
+auditing and enforcement. 
+
+\paragraph{Risk mitigation.}
+One of the challenges with performing audit studies in the area of content
+moderation is that testing whether content should be moderating runs the risk
+of possibly introducing objectionable content that users may see, thus
+introducing a potential for harm. To mitigate this risk, we will design these
+audit studies based on content in each of the areas that we explore that is
+closer to ``boundary conditions''. In other words, for content that is notably
+harmful or objectionable, then users should expect that content to be removed,
+and we also do not stand to learn much from an audit study that tests whether
+such content is removed. The more interesting aspects of such audit studies
+lie in the gray areas, where content may be objectionable but not necessarily
+harmful. Consider the following examples:
+\begin{itemize}
+    \itemsep=-1pt
+    \item For copyrighted content, we might post some of our own
+        copyrighted work, where we are the sole copyright owners.
+    \item For misinformation, we might post information pertaining to the
+        opening of a local business that does not exist (a non-existent
+        business cannot be harmed), or similar events that avoid or minimize harm
+        to real-world entities.
+    \item For hate speech, we might consider posting content that is
+        disrespectful or irreverent, but avoids defaming or slandering any
+        individual or group.
+\end{itemize}
+\noindent
+Such examples will need refinement, but the general idea is that we will
+design audit studies that test the boundaries of what is acceptable, and
+whether platforms are consistent in their moderation of such content. The most
+interesting cases will be those where outcomes are not immediately obvious
+prior to test---and we expect to be able to design other such low-stakes
+boundary examples that test the clarity and effectiveness of rules and process
+with minimal or no harm to individuals or groups.
+
+
+
+\paragraph{Performing audit studies legally and ethically.}
+A legal question is whether audit studies constitute a terms of service
+violation,
+and whether terms of service violations are illegal under the Computer Fraud
+and Abuse Act~(CFAA). In March 2020, in {\em Van Buren v. United States}, the
+United States Supreme Court ruled that terms of service violations do not
+constitute CFAA violations. The ruling had important implications for many
+computer science researchers and clarified the legal guidelines for
+researchers who study topics such as those we describe in this work. These
+rulings affirm the ACM's position (who filed an amicus brief in the case) that
+under many circumstances, computer security researchers should not be
+prosecuted for violating the terms of service. In {\em Sandvig v. Barr}, the
+Supreme Court ruled that terms of service that prevent researchers from
+performing certain activities---including activities such as the creation of
+fictitious accounts---can chill research (such as that described in this
+proposal) and are a violation of First Amendment rights. As such, reading of
+past case law, combined with a survey of past work on audit studies, suggest
+that the proposed work is within the bounds of current rulings
+and case law.
+Ethics considerations are naturally more complex, particularly given the
+nature of the experiments we propose. According to the Belmont Report,
+researchers should abide by several principles: (1) respect for humans; (2)
+beneficence; and (3) justice. In the case of this work, obtaining informed
+consent (which would fall under respect for humans) is not practical, since
+doing so would expose the subjects to the experiment and taint the audit
+itself. Nevertheless, we can abide by respect for humans and beneficence by
+limiting the risks associated with the nature of the content that we post, as
+described above.
