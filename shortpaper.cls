@@ -12,7 +12,7 @@
 
 \newcommand{\fp}{\vspace*{0.06in}\noindent}
 \renewcommand{\b}{$\bullet$}
-\renewcommand{\paragraph}[1]{\fp {\bf #1}}
+%\renewcommand{\paragraph}[1]{\fp {\bf #1}}
 
 \renewenvironment{thebibliography}[1]
      {\formatsection{References}\penalty4000

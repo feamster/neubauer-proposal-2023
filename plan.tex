@@ -27,6 +27,7 @@ misinformation, and hate speech).
 
 
 \begin{table}[t]
+    \begin{scriptsize}
     \begin{tabular}{|p{6in}|}
 \hline
 aliexpress.com, 
@@ -74,6 +75,7 @@ xvideos.com,
 youtube.com
 \\ \hline
 \end{tabular}
+    \end{scriptsize}
 \caption{The 43 platforms in our dataset of online content moderation policies (OCMP-43), ordered by their Tranco ranking.}
 \label{tab:platformlist}
 \end{table}
@@ -239,7 +241,7 @@ Our specific research questions are:
 \end{enumerate}
  
 We will use the outcomes of Part~\ref{sec:landscape} to inform the design of our user studies on
-content moderation rules by drawing rule excepts from our datasets (see Figure \ref{fig:example_rules_OMCP43}).
+content moderation rules by drawing rule excepts from our datasets. 
 We hypothesize that
 users may understand copyright violations better than hate
 speech and misinformation because laws for copyright are more
@@ -307,27 +309,21 @@ Determine whether users can apply rules to example content.
 \end{task}
 
 
-\if 0
 \label{sec:rule-implementation}
 \begin{table}[t]
-    \begin{tabularx}{\textwidth}{c | X | X | X}
+    \begin{tabular}{c|p{1.8in}|p{1.8in}|p{1.8in}}
         & {\bf Copyright} & {\bf Hate Speech} & {\bf Misinformation} \\ \hline
         \parbox{0.7in}{Commercial\\ Products} &
         \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/obvious/etsycopyrightobvious}} &
         \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/kkk.jpg}} &
         \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/obvious/etsymisinformationobvious}}
         \\ \hline
-        % Video & 
-        % \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/obvious/facebook_post_copyright}} & 
-        % \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/ambiguous/asiansdirtymugglesvideo}} &
-        % \parbox[c]{\hsize}{\includegraphics[width=1.2in]{figures/obvious/youtubemisinformationobvious}} 
-        % \\ \hline
     Text & 
         \parbox[c]{\hsize}{\includegraphics[width=0.24\textwidth]{figures/obvious/reddit_copyrightBig.jpg}}  & 
         \parbox[c]{\hsize}{\includegraphics[width=0.24\textwidth]{figures/ebay.jpg}} & 
       \parbox[c]{\hsize}{\includegraphics[width=0.24\textwidth]{figures/facebook_post_misinfo.png}} 
         \\ \hline
-    \end{tabularx}
+    \end{tabular}
     \caption{Examples of content we generated that could violate the content moderation
     rules we observed in OMCP-43, by content type (commercial products, 
     % video,
@@ -335,7 +331,6 @@ Determine whether users can apply rules to example content.
     We only show examples for five platforms all of which appear in our preliminary OCMP-43 dataset: Etsy, eBay, Facebook, YouTube, and Reddit.}
     \label{tab:example_content}
 \end{table}
-\fi
 
 To build trust in online platforms, it is important to have rules with clear applicability to posted content. This task will allow us to determine how users expect rules to apply and whether those expectations align with what actually happens on a
 platform based on observations in Part 3. We will design an
@@ -343,11 +338,11 @@ online survey to evaluate user perceptions of content
 moderation rules for copyright, hate speech, and misinformation respectively.
 For each set of rules, we will draw at least one rule from the group of rules
 pertaining to that topic (e.g., misinformation) and first ask the user to read
-the rule, (e.g., see Figure \ref{fig:example_rules_OMCP43} for example rules on misinformation and copyright on Facebook and Twitch), and rate the rule for clarity and fairness. We may also show similar rules drawn from similar types of platforms (e.g., Vimeo versus YouTube versus Twitch versus TikTok).
+the rule, and rate the rule for clarity and fairness. We may also show similar rules drawn from similar types of platforms (e.g., Vimeo versus YouTube versus Twitch versus TikTok).
 
 Second, we will show a user an excerpt of ``content'' and ask them
 whether or not this content violates the rule in question and to explain why
-or why not the rules applies. Users will also be asked if the content will definitely get moderated, may get moderated, or definitely would not get moderated. Where possible, we will fabricate this content using examples that are quoted in platform rules we have gathered in our preliminary dataset as shown in Table \ref{tab:example_content}. We will vary content to show a spectrum of clearly questionable content to content that is not violating the rule. For instance, a clear copyright violation is show in Table \ref{tab:example_content}, with Mickey Mouse's image on a bag. The table also shows an example of \textit{harmful} speech we drew directly from eBay's member-to-member contact policy and an example of misinformation content drawn from the Facebook help center rules on vaccine misinformation (Figure \ref{fig:FBmisinforule}). If we cannot find an appropriate example of content that needs to be moderated directly from OCMP-43 or our extensions in Part 1, we will fabricate this content based on rules in the dataset, taking care to ensure it is not harmful. For instance, based on the copyright rule excerpt from Twitch (Figure \ref{fig:Twitchcopyrightrule}), we could create a video of a live Twitch stream which uses a Taylor swift song as background music as an example of content violating the rule. We will also vary the types of content shown, for
+or why not the rules applies. Users will also be asked if the content will definitely get moderated, may get moderated, or definitely would not get moderated. Where possible, we will fabricate this content using examples that are quoted in platform rules we have gathered in our preliminary dataset as shown in Table \ref{tab:example_content}. We will vary content to show a spectrum of clearly questionable content to content that is not violating the rule. For instance, a clear copyright violation is show in Table \ref{tab:example_content}, with Mickey Mouse's image on a bag. The table also shows an example of \textit{harmful} speech we drew directly from eBay's member-to-member contact policy and an example of misinformation content drawn from the Facebook help center rules on vaccine misinformation. If we cannot find an appropriate example of content that needs to be moderated directly from OCMP-43 or our extensions in Part 1, we will fabricate this content based on rules in the dataset, taking care to ensure it is not harmful. For instance, based on the copyright rule excerpt from Twitch, we could create a video of a live Twitch stream which uses a Taylor swift song as background music as an example of content violating the rule. We will also vary the types of content shown, for
 instance, using a video with misinformation, a Reddit or Facebook post with
 harmful speech (as opposed to hate speech), or a product on Etsy with a copyright violation.
 
@@ -544,8 +539,8 @@ on reports that Facebook required authorization by the makers of ``Bush's
 Beans", an American food company that shares its name with former United
 States presidents \cite{rosenberg_facebook_2018}.
 Once we designed types of ads to place and determined how many ads should be
-placed, we wrote software to help generate ads for Facebook and Google, as
-shown in Figure~\ref{fig:facebook_ad_examples} and Figure~\ref{fig:google_ad_examples}.
+placed, we wrote software to help generate ads for Facebook and Google.
+
 
 
 \if 0
@@ -729,7 +724,7 @@ whether platforms are consistent in their moderation of such content. The most
 interesting cases will be those where outcomes are not immediately obvious
 prior to test---and we expect to be able to design other such low-stakes
 boundary examples that test the clarity and effectiveness of rules and process
-with minimal or no harm to individuals or groups.
+with minimal or no harm to individuals.
 
 
 
