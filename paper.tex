@@ -5,9 +5,6 @@
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{cite}
-\newcommand{\rcc}{\textsf{rcc~}}
-\newcommand{\rccns}{\textsf{rcc}}
-\newcommand{\rccl}{{\large\textsf{rcc~}}}
 \newcommand{\ea}{{\em et al.}}
 \newcommand{\ie}{{\em i.e.}}
 \newcommand{\eg}{{\em e.g.}}
@@ -15,34 +12,75 @@
 \newtheorem{task}{Task}
 \newtheorem{problem}{Problem}[section]
 
-\def\TITLE{Title Here}
+\newcommand{\TITLE}{Understanding and Auditing Content Moderation Policies}
+%\def\TITLE{Title Here}
 \def\heading{\TITLE, \today}
 
 \begin{document}
 
-\formattitle{\TITLE}{Nick Feamster, University of Chicago} 
+\formattitle{\TITLE}{Marshini Chetty, Nick Feamster, Chenhao Tan; University of Chicago} 
 
 \section*{Overview}
 
 \begin{tabular}{p{2in}p{4in}}
 Title: & \parbox{4in}{\TITLE} \\ \\
-Principal Investigators: & 
+Core Research Team: & 
 \parbox{4in}{
-Professor Nick Feamster \\
+Professor Marshini Chetty \\
+Professor Nick Feamster (Neubauer Professor) \\
+Professor Genevieve Lakier \\
+Professor Chenhao Tan\\
 Department of Computer Science \\
 University of Chicago \\
 Chicago, Illinois 60637 \\
-feamster@uchicago.edu \\
-+1 773 702 2322 \\
-\\
 }
+\\
+    Funding Amount Requested: & \$300,000
 \end{tabular}
 
+\section*{Abstract}
+ 
+As Internet discourse and content becomes increasingly consolidated, a
+relatively small number of platforms now have disproportionate decision-making
+power over how content is hosted and disseminated on the Internet. The
+practice of deciding whether to publish, remove, or flag content that is
+posted by third-party users is typically referred to as {\em content
+moderation}.  In certain contexts such as copyright, the concept of content
+moderation is well-established. On the other hand, over the past several
+decades, the scope of content moderation has expanded considerably, to include
+a range of speech, including terrorist speech, hate speech, harassment,
+disinformation, and more recently, AI generated content.  In many of these
+cases, laws and regulations are less well-established. Furthermore, the
+technical capabilities to detect forms of content and speech that run afoul of
+norms and platform terms of service (in the absence of laws and regulations)
+are also less mature. To compound the problem, the amount of content that
+users post to platforms has increased by several orders of magnitude.  
+To this end, in this project, we aim to study three questions: (1) What is the
+landscape of current content moderation policies? (2) How do users perceive,
+understand, and react to content moderation? (3) How do different platforms
+implement content moderation in practice? By preforming continual, large-scale
+measurements of the content moderation practices, we will study a range of
+popular online platforms with user-generated content that vary in terms of
+type of media, type of content, and scale of platform. 
+
+
+
+\pagebreak
+
+\setcounter{page}{1}
+
+\begin{sloppypar}
+\input{questions}
+\input{collaboration}
+\input{support}
+\input{plan}
+\input{results}
+\end{sloppypar}
 
 \pagebreak
 \begin{small}
 \bibliographystyle{abbrv}
-%\bibliography{paper}
+\bibliography{ref}
 \end{small}
 
 

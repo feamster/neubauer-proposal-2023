@@ -13,7 +13,7 @@ all: pdf
 
 $(REPORT).pdf: $(SRCS) $(CLS)
 	$(LATEX) $(REPORT)
-#	$(BIBTEX) $(REPORT)
+	$(BIBTEX) $(REPORT)
 #	perl -pi -e "s/%\s+//" $(REPORT).bbl
 	$(LATEX) $(REPORT)
 	$(LATEX) $(REPORT)
